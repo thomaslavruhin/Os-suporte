@@ -1,3 +1,16 @@
+<?php
+
+require_once "Conexao.php";
+
+try{
+    $Conexao        = Conexao::getConnection();
+    $query          = $Conexao->query("SELECT idResponsavel, nomeResponsavel FROM responsavel");
+    $responsaveis     = $query->fetchAll();
+    }catch(Exception $e){
+    echo $e->getMessage();
+    exit;
+ }
+?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -31,20 +44,11 @@
                 <th scope="col">Ação</th>
             </tr>
         </thead>
-    
-      <?php
-        include 'conexao.php';
-        $sql= "SELECT * FROM `responsavel`";
-        $busca = mysqli_query($conexao, $sql);
-        
-        while ($array = mysqli_fetch_array($busca)){
-
-            $idResponsavel = $array ['idResponsavel'];
-            $nomeResponsavel = $array ['nomeResponsavel'];
-        
-        ?>
+        <?php
+               foreach($responsaveis as $responsavel) {
+            ?>
         <tr>
-        <td><?php echo $nomeResponsavel?></td>
+        <td><?php echo $responsavel['nomeResponsavel'];?></td>
      
         <td><a class="btn btn-secondary btn-sm" href="editarResponsavel.php?id=<?php echo $idResponsavel ?>" role="button" ><i class="fa-regular fa-pen-to-square"></i> Editar</button></a>
         <a class="btn btn-danger btn-sm" href="deletarResponsavel.php?id=<?php echo $idResponsavel ?>" role="button" ><i class="fa-solid fa-delete-left"></i> Excluir</button></a>

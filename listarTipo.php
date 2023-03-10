@@ -1,3 +1,20 @@
+<?php
+
+require_once "Conexao.php";
+
+try{
+    $Conexao        = Conexao::getConnection();
+    $query          = $Conexao->query("SELECT idTipo, nomeTipo FROM tipo");
+    $tipos     = $query->fetchAll();
+    }catch(Exception $e){
+    echo $e->getMessage();
+    exit;
+ }
+?>
+
+
+
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -32,19 +49,11 @@
             </tr>
         </thead>
     
-      <?php
-        include 'conexao.php';
-        $sql= "SELECT * FROM `tipo`";
-        $busca = mysqli_query($conexao, $sql);
-        
-        while ($array = mysqli_fetch_array($busca)){
-
-            $idTipo = $array ['idTipo'];
-            $nomeTipo = $array ['nomeTipo'];
-        
-        ?>
+        <?php
+               foreach($tipos as $tipo) {
+            ?>
         <tr>
-        <td><?php echo $nomeTipo?></td>
+        <td><?php echo $tipo['nomeTipo'];?></td>
      
         <td><a class="btn btn-secondary btn-sm" href="editarTipo.php?id=<?php echo $idTipo ?>" role="button" ><i class="fa-regular fa-pen-to-square"></i> Editar</button></a>
         <a class="btn btn-danger btn-sm" href="deletarTipo.php?id=<?php echo $idTipo ?>" role="button" ><i class="fa-solid fa-delete-left"></i> Excluir</button></a>
